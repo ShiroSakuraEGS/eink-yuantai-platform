@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>元太科技 E Ink｜電子紙技術全景互動平台</title>
+  <meta name="description" content="深度解析元太科技 E Ink 電子紙技術：電泳微膠囊物理模擬、雙穩態原理、1990-2026 演進時光軸、Kaleido/Gallery/Spectra 彩色架構即時模擬、BLE 輕量電源試算、生成式 AI 整合架構。">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- 電子紙黑白全頁翻轉刷新特效遮罩 -->
+  <div id="einkFlashOverlay" class="eink-flash-overlay"></div>
+
+  <!-- 頁面捲動進度條 -->
+  <div class="progress-bar" id="progressBar"></div>
+
+  <!-- 頂部導覽列 -->
+  <header class="header-nav" id="mainNav">
+    <div class="nav-container">
+      <a href="#" class="logo-group">
+        <div class="logo-icon">E<br>INK</div>
+        <div class="logo-text">
+          <h1>元太科技電子紙全景</h1>
+          <p>E Ink Interactive Tech Platform</p>
+        </div>
+      </a>
+
+      <!-- 桌機導覽連結 -->
+      <ul class="nav-links" id="desktopNavLinks">
+        <li><a href="#principles">顯示原理</a></li>
+        <li><a href="#glossary">技術字典</a></li>
+        <li><a href="#color-tech">彩色架構</a></li>
+        <li><a href="#timeline">演進軸線</a></li>
+        <li><a href="#system-diagram">元件拓撲</a></li>
+        <li><a href="#offload">運算外移</a></li>
+        <li><a href="#ble-power">BLE ✕ 電源</a></li>
+        <li><a href="#gen-ai">生成式 AI</a></li>
+        <li><a href="#citations">來源索引</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <!-- 模擬電子紙全頁刷新按鈕 -->
+        <button id="einkRefreshBtn" class="action-pill-btn refresh-trigger-btn" title="模擬真實電子紙全頁黑白翻轉波形刷新 (Full Refresh)">
+          <span class="btn-icon">⚡</span>
+          <span class="btn-label">全頁刷新</span>
+        </button>
+
+        <!-- 主題切換 -->
+        <button id="themeToggleBtn" class="action-pill-btn theme-toggle-btn" aria-label="切換主題">
+          <span class="theme-icon" id="themeIcon">🌙</span>
+          <span id="themeLabel">暗色</span>
+        </button>
+
+        <!-- 漢堡選單按鈕 (手機) -->
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="開啟選單">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 手機導覽抽屜 -->
+  <nav class="mobile-nav-drawer" id="mobileDrawer">
+    <div class="drawer-header">
+      <span class="drawer-title">📌 快速導航</span>
+      <button class="drawer-close-btn" id="drawerCloseBtn" aria-label="關閉選單">✕</button>
+    </div>
+    <a href="#principles" class="drawer-link">⚡ 一、顯示原理與物理模擬</a>
+    <a href="#glossary" class="drawer-link">📖 二、20 大核心技術名詞字典</a>
+    <a href="#color-tech" class="drawer-link">🎨 三、彩色電子紙三大架構</a>
+    <a href="#timeline" class="drawer-link">⏳ 四、技術演進時光軸 (1990~2026)</a>
+    <a href="#system-diagram" class="drawer-link">🔄 五、系統元件與雙資料路徑</a>
+    <a href="#offload" class="drawer-link">☁️ 六、運算與儲存外移權衡</a>
+    <a href="#ble-power" class="drawer-link">🔋 七、BLE ✕ 輕量電源互動試算</a>
+    <a href="#gen-ai" class="drawer-link">🤖 八、生成式 AI 協同系統架構</a>
+    <a href="#citations" class="drawer-link">🌐 九、官方公開來源考證索引庫</a>
+    <div class="drawer-footer">
+      <button id="drawerRefreshBtn" class="drawer-refresh-btn">⚡ 模擬電子紙黑白刷新特效</button>
+    </div>
+  </nav>
+  <div class="drawer-overlay" id="drawerOverlay"></div>
+
+  <!-- 主要內容 -->
+  <main class="main-wrapper">
+
+    <!-- ══ 英雄區塊 ══ -->
+    <section class="hero-section reveal">
+      <div class="hero-inner">
+        <div class="hero-tags">
+          <span class="tag-pill featured">元太科技 (E Ink) 核心顯示技術</span>
+          <span class="tag-pill">電泳式微膠囊 ✕ 微杯</span>
+          <span class="tag-pill">雙穩態 Bi-stability</span>
+          <span class="tag-pill">BLE 外部運算外移</span>
+          <span class="tag-pill">生成式 AI 協同設計</span>
+        </div>
+
+        <h1 class="hero-headline">
+          電泳墨水 ✕ <span class="word-accent">雙穩態</span><br>
+          ✕ 運算外移架構全景解析
+        </h1>
+
+        <p class="hero-subtext">
+          電子紙以<strong>電泳式電子墨水（Electrophoretic Ink）</strong>為核心，具備反射環境光與斷電畫面永續維持的<strong>雙穩態（Bi-stability）</strong>物理特性，實現極致超低功耗。本平台整合微膠囊動態物理模擬、即時驅動波形時序圖、1990~2026 技術演進、彩色四大架構即時模擬工作室、系統硬體拓撲檢測器及輕量電源試算模型。
+        </p>
+
+        <div class="hero-callout">
+          <span class="callout-icon">💡</span>
+          <span>
+            <strong>系統定位重要說明：</strong>E Ink 主要提供電子紙顯示膜、模組與顯示技術；完整終端產品仍需搭配驅動 IC、主控 MCU/SoC、記憶體、無線通訊晶片、PMIC 電源管理與電池模組。
+          </span>
+        </div>
+
+        <div class="hero-metrics">
+          <div class="metric-chip">
+            <div class="metric-chip-val">0 µW</div>
+            <div class="metric-chip-lbl">靜態維持功耗</div>
+            <div class="metric-chip-desc">雙穩態特性，斷電後畫面永遠不消失</div>
+          </div>
+          <div class="metric-chip">
+            <div class="metric-chip-val">300 PPI</div>
+            <div class="metric-chip-lbl">視網膜級黑白解析度</div>
+            <div class="metric-chip-desc">Carta HD 與 Kaleido 3 頂級印刷級清晰度</div>
+          </div>
+          <div class="metric-chip">
+            <div class="metric-chip-val">&lt;15 mA</div>
+            <div class="metric-chip-lbl">BLE 峰值電流</div>
+            <div class="metric-chip-desc">相較 Wi-Fi 降低 90% 瞬態峰值功耗</div>
+          </div>
+          <div class="metric-chip">
+            <div class="metric-chip-val">2026</div>
+            <div class="metric-chip-lbl">Spectra 6 面積突破黑白</div>
+            <div class="metric-chip-desc">彩色零售電子紙進入全面普及元年</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 1. 電泳顯示原理與物理模擬器 ══ -->
+    <section id="principles" class="section-block">
+      <div class="section-header reveal">
+        <div class="section-eyebrow"><div class="eyebrow-dot"></div>PHYSICS &amp; PRINCIPLES</div>
+        <h2 class="section-title">一、電泳顯示原理與雙穩態微膠囊物理模擬</h2>
+        <p class="section-desc">
+          微膠囊內含帶負電白色粒子與帶正電黑色粒子，懸浮於透明黏滯油性液體中。電場方向決定何種粒子升至表面形成像素，斷電時流體阻尼與凡得瓦力使粒子定格，達成零耗電雙穩態。
+          <a class="ref-link" href="https://tw.eink.com/tech/detail/How_it_works" target="_blank" rel="noopener">tw.eink 顯示原理 ↗</a>
+          <a class="ref-link" href="https://tw.eink.com/tech/detail/FAQ" target="_blank" rel="noopener">FAQ ↗</a>
+        </p>
+      </div>
+
+      <div class="card card-pad-lg reveal">
+        <div class="simulator-wrapper">
+          <!-- Canvas 物理動畫與波形示波器 -->
+          <div class="canvas-frame">
+            <div class="canvas-header">
+              <div class="canvas-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="canvas-title-chip">electrophoretic-simulator.canvas</span>
+              <span id="simStateBadge" class="sim-state-badge active-pos">⚡ +V 正電場 (顯白)</span>
+            </div>
+            
+            <div class="canvas-main-container">
+              <canvas id="particleCanvas" width="620" height="340"></canvas>
+            </div>
+
+            <!-- 即時驅動波形時序圖 (Live Waveform) -->
+            <div class="waveform-panel">
+              <div class="waveform-header">
+                <span class="waveform-title">📈 即時驅動波形時序圖 (Live Waveform Oscilloscope)</span>
+                <span class="waveform-indicator" id="waveformStatus">狀態: 正向驅動脈衝 (+15V)</span>
+              </div>
+              <canvas id="waveformCanvas" width="620" height="64"></canvas>
+            </div>
+          </div>
+
+          <!-- 控制面板 -->
+          <div class="sim-controls">
+            <!-- 電壓驅動面板 -->
+            <div class="ctrl-panel">
+              <div class="ctrl-panel-title">
+                <span>⚡ 驅動電壓控制 (Driving Waveform)</span>
+                <span class="ctrl-val-display" id="currentVoltageText">+15V (顯白)</span>
+              </div>
+              <div class="voltage-btns">
+                <button id="btnVoltagePos" class="v-btn active-pos" title="頂部透明電極為正電位，吸引帶負電白粒子">
+                  <span>+V<br><small>頂部顯白</small></span>
+                </button>
+                <button id="btnVoltageNeg" class="v-btn" title="頂部透明電極為負電位，吸引帶正電黑粒子">
+                  <span>-V<br><small>頂部顯黑</small></span>
+                </button>
+                <button id="btnVoltageGray" class="v-btn" title="交替高頻微幅脈衝，使粒子停滯中間層形成灰階">
+                  <span>~V<br><small>中間灰階</small></span>
+                </button>
+                <button id="btnVoltageZero" class="v-btn" title="移除電壓，展示雙穩態 0 功耗畫面恆久鎖定">
+                  <span>0V<br><small>雙穩態 🔒</small></span>
+                </button>
+              </div>
+              <div class="sim-quick-actions">
+                <button id="btnTriggerRefresh" class="sim-action-btn">
+                  <span>🔄 觸發全螢幕黑白重置波形 (Full Refresh Waveform)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 環境光照度光學模擬滑桿 (Ambient Lux Slider) -->
+            <div class="ctrl-panel">
+              <div class="ctrl-panel-title">
+                <span>☀️ 環境光照度光學模擬 (Ambient Lux)</span>
+                <span class="ctrl-val-display" id="ambientLuxValue">10,000 Lux (室外多雲)</span>
+              </div>
+              <input type="range" id="ambientLuxSlider" class="custom-range" min="50" max="50000" value="10000" step="50">
+              <div class="range-labels">
+                <span>50 Lux (暗房)</span>
+                <span>500 Lux (辦公室)</span>
+                <span>10,000 Lux (多雲)</span>
+                <span>50,000 Lux (豔陽)</span>
+              </div>
+
+              <!-- E-Ink vs LCD 反射可視度對比指示計 -->
+              <div class="optical-contrast-meter">
+                <div class="meter-col eink-col">
+                  <div class="meter-label">🌿 電子紙 E-Ink 反射可讀性</div>
+                  <div class="meter-bar-track">
+                    <div class="meter-bar-fill eink-fill" id="einkContrastBar" style="width: 88%;"></div>
+                  </div>
+                  <div class="meter-caption" id="einkContrastText">強光直射越清晰，無反光眩光</div>
+                </div>
+                <div class="meter-col lcd-col">
+                  <div class="meter-label">📱 傳統液晶 LCD 可視度 (對照)</div>
+                  <div class="meter-bar-track">
+                    <div class="meter-bar-fill lcd-fill" id="lcdContrastBar" style="width: 32%;"></div>
+                  </div>
+                  <div class="meter-caption" id="lcdContrastText">陽光下背光泛白，產生強烈倒影</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 物理現象說明盒 -->
+            <div class="explain-box">
+              <h4 id="physicsExpTitle">⚪ +V 正電場作用中（純白像素顯色）</h4>
+              <p id="physicsExpText">
+                頂部透明導電電極 (ITO) 施加正電位，帶負電的白色二氧化鈦微粒子受電力 F = qE 驅使浮至微膠囊頂端；環境光照射後強烈散射回人眼，呈現純白色。黑色碳黑粒子則沉降於底部隱蔽。
+              </p>
+              <div class="formula-pill">
+                P<sub>avg</sub> ≈ P<sub>update</sub> × D<sub>update</sub> + P<sub>standby</sub> (待機 P<sub>standby</sub> ≈ 0)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 2. 技術名詞字典 ══ -->
+    <section id="glossary" class="section-block">
+      <div class="section-header reveal">
+        <div class="section-eyebrow"><div class="eyebrow-dot"></div>TERMINOLOGY DICTIONARY</div>
+        <h2 class="section-title">二、20 大核心技術名詞全檢索字典</h2>
+        <p class="section-desc">涵蓋顯示原理、硬體驅動、彩色光學與終端應用 20 個關鍵技術詞條，支援即時模糊搜尋與多維分類篩選。</p>
+      </div>
+
+      <div class="glossary-toolbar reveal">
+        <div class="search-wrap">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="glossarySearchInput" class="search-input" placeholder="搜尋技術名詞：雙穩態、ACeP、Waveform、Carta...">
+          <button id="glossarySearchClear" class="search-clear-btn" aria-label="清除搜尋">✕</button>
+        </div>
+        <div class="filter-chips">
+          <button class="filter-chip active" data-category="all">全部 (20)</button>
+          <button class="filter-chip" data-category="principle">顯示原理 (6)</button>
+          <button class="filter-chip" data-category="hardware">硬體與驅動 (6)</button>
+          <button class="filter-chip" data-category="color">彩色光學 (6)</button>
+          <button class="filter-chip" data-category="application">終端應用 (2)</button>
+        </div>
+      </div>
+
+      <div id="glossaryGrid" class="glossary-grid"></div>
+    </section>
+
+    <!-- ══ 3. 彩色電子紙三大架構 ══ -->
+    <section id="color-tech" class="section-block">
+      <div class="section-header reveal">
+        <div class="section-eyebrow"><div class="eyebrow-dot"></div>COLOR ARCHITECTURES</div>
+        <h2 class="section-title">三、彩色電子紙三大架構剖析 ✕ 即時色彩工作室</h2>
+        <p class="section-desc">元太科技針對漫畫閱讀、藝術看板與零售標籤的不同需求，發展出三大色彩架構。可於下方互動工作室親身體驗各種技術的顯色與微觀結構差異。</p>
+      </div>
+
+      <!-- 三大架構經典技術卡片 -->
+      <div class="color-tech-grid">
+        <!-- Kaleido -->
+        <div class="color-tech-card kaleido reveal">
+          <div class="ctc-header">
+            <div class="ctc-badge">📚 彩色濾光片 CFA</div>
+            <div class="ctc-accent-bar"></div>
+            <div class="ctc-name">E Ink Kaleido™ 3</div>
+            <div class="ctc-subtitle">黑白電泳墨水 ✕ RGB 彩色濾光片陣列</div>
+          </div>
+          <div class="ctc-body">
+            <div class="layer-stack">
+              <div class="stack-item sl-light">環境光 (Ambient Light) ↓</div>
+              <div class="stack-item sl-cfa">R G B 彩色濾光片陣列 (CFA)</div>
+              <div class="stack-item sl-bw">黑白電泳式電子墨水層 (Carta)</div>
+              <div class="stack-item sl-tft">TFT 薄膜電晶體驅動背板</div>
+            </div>
+            <ul class="feature-list">
+              <li><span class="fi check-icon">✓</span>4,096 色彩，16 階黑白灰階</li>
+              <li><span class="fi check-icon">✓</span>黑白 300 PPI / 彩色 150 PPI 銳利文字</li>
+              <li><span class="fi check-icon">✓</span>刷新速度快，翻頁順暢無延遲</li>
+              <li><span class="fi check-icon">✓</span>電子書、漫畫、教科書首選</li>
+              <li><span class="fi warn-icon">⚠</span>濾光片層微幅吸收反射光</li>
+              <li><span class="fi warn-icon">⚠</span>色彩較為柔和粉嫩非高飽和</li>
+            </ul>
+          </div>
+          <div class="ctc-footer">
+            <a class="ref-link" href="https://tw.eink.com/brand?bookmark=Kaleido" target="_blank" rel="noopener">Kaleido 專頁 ↗</a>
+            <a class="ref-link" href="https://tw.eink.com/news/detail/JDD4V8G3ZG" target="_blank" rel="noopener">Kaleido 3 規格 ↗</a>
+          </div>
+        </div>
+
+        <!-- Gallery/ACeP -->
+        <div class="color-tech-card gallery reveal">
+          <div class="ctc-header">
+            <div class="ctc-badge">🎨 全彩微粒子 ACeP</div>
+            <div class="ctc-accent-bar"></div>
+            <div class="ctc-name">E Ink Gallery™ 3</div>
+            <div class="ctc-subtitle">C/M/Y/W 四色帶電微粒子直接混色</div>
+          </div>
+          <div class="ctc-body">
+            <div class="layer-stack">
+              <div class="stack-item sl-light">環境光 (Ambient Light) ↓</div>
+              <div class="stack-item sl-cmyw">青(C) 洋紅(M) 黃(Y) 白(W) 四色粒子</div>
+              <div class="stack-item sl-tft">TFT 背板 ✕ 精密多階波形電壓</div>
+            </div>
+            <ul class="feature-list">
+              <li><span class="fi check-icon">✓</span>50,000+ 色域，飽和度媲美印刷海報</li>
+              <li><span class="fi check-icon">✓</span>無彩色濾光片光損，反射率極高</li>
+              <li><span class="fi check-icon">✓</span>數位藝術看板、公共展覽、高階筆記本</li>
+              <li><span class="fi warn-icon">⚠</span>多色粒子多重電壓驅動耗時約 1~1.5 秒</li>
+              <li><span class="fi warn-icon">⚠</span>驅動 IC 與波形調校演算複雜度高</li>
+            </ul>
+          </div>
+          <div class="ctc-footer">
+            <a class="ref-link" href="https://tw.eink.com/news/detail/E%20Ink_Announces_E%20Ink_Gallery%E2%84%A2_3_Moves_Into_Mass_Production_With_Customer_Launches" target="_blank" rel="noopener">Gallery 3 量產 ↗</a>
+          </div>
+        </div>
+
+        <!-- Spectra -->
+        <div class="color-tech-card spectra reveal">
+          <div class="ctc-header">
+            <div class="ctc-badge">🏷 有限色/高飽和 Spectra</div>
+            <div class="ctc-accent-bar"></div>
+            <div class="ctc-name">E Ink Spectra™ 6</div>
+            <div class="ctc-subtitle">黑白紅黃藍綠 零售促銷貨架終極方案</div>
+          </div>
+          <div class="ctc-body">
+            <div class="layer-stack">
+              <div class="stack-item sl-light">環境光 (Ambient Light) ↓</div>
+              <div class="stack-item sl-spectra">黑 / 白 / 紅 / 黃 / 藍 / 綠 高彩微粒</div>
+              <div class="stack-item sl-tft">超低功耗 TFT 零售專用背板</div>
+            </div>
+            <ul class="feature-list">
+              <li><span class="fi check-icon">✓</span>廣告紙質等級超高飽和與清晰對比度</li>
+              <li><span class="fi check-icon">✓</span>促銷價格、打折特價辨識度極其醒目</li>
+              <li><span class="fi check-icon">✓</span>2026 出貨面積突破黑白消費電子產品</li>
+              <li><span class="fi check-icon">✓</span>智慧零售 ESL 標籤與 POP 宣傳看板</li>
+              <li><span class="fi warn-icon">⚠</span>不適合細膩人像漸層照片呈現</li>
+            </ul>
+          </div>
+          <div class="ctc-footer">
+            <a class="ref-link" href="https://tw.eink.com/upload/2024_05_27/47_20240527170202zo92fgjJH6.pdf" target="_blank" rel="noopener">Spectra 規格 ↗</a>
+            <a class="ref-link" href="https://tw.eink.com/news/detail/Q7FU6K47HU" target="_blank" rel="noopener">Spectra 6 發表 ↗</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ 彩色架構即時模擬工作室 (Color Architecture Studio) ══ -->
+      <div class="card card-pad-lg reveal color-studio-section" style="margin-top:2rem;">
+        <div class="studio-header">
+          <div>
+            <h3 class="studio-title">🔬 彩色電子紙四大架構即時模擬工作室</h3>
+            <p class="studio-desc">切換不同題材樣張與顯示膜模式，直觀體會 Carta 黑白、Kaleido 濾光片網格、Gallery 全彩混色與 Spectra 促銷高對比的視覺質感！</p>
+          </div>
+          <div class="sample-picker">
+            <span class="picker-label">選取測試樣張：</span>
+            <button class="sample-btn active" data-sample="manga">📖 漫畫封面</button>
+            <button class="sample-btn" data-sample="art">🎨 印象派名畫</button>
+            <button class="sample-btn" data-sample="retail">🏷️ 超商特價標籤</button>
+          </div>
+        </div>
+
+        <div class="studio-body">
+          <!-- 顯示膜技術切換列 -->
+          <div class="tech-mode-tabs">
+            <button class="tech-tab-btn active" data-tech="carta">
+              <span class="tab-badge">黑白基準</span>
+              <strong>Carta 1200</strong>
+              <small>300 PPI / 16 灰階</small>
+            </button>
+            <button class="tech-tab-btn" data-tech="kaleido">
+              <span class="tab-badge">彩色濾光片</span>
+              <strong>Kaleido 3</strong>
+              <small>4,096 色 / CFA 網格</small>
+            </button>
+            <button class="tech-tab-btn" data-tech="gallery">
+              <span class="tab-badge">全彩微粒子</span>
+              <strong>Gallery 3</strong>
+              <small>50,000+ 色 / ACeP 混色</small>
+            </button>
+            <button class="tech-tab-btn" data-tech="spectra">
+              <span class="tab-badge">零售鮮豔</span>
+              <strong>Spectra 6</strong>
+              <small>高飽和 6 色 / POP 看板</small>
+            </button>
+          </div>
+
+          <div class="studio-preview-grid">
+            <!-- 模擬渲染顯示畫布 -->
+            <div class="studio-viewport-wrap">
+              <div class="viewport-header">
+                <span id="studioTechLabel" class="viewport-badge">Carta 1200 (純黑白電子墨水 300 PPI)</span>
+                <span class="viewport-tip">💡 移動滑鼠可啟用微觀粒子放大鏡</span>
+              </div>
+              <div class="viewport-canvas-box" id="viewportCanvasBox">
+                <canvas id="colorStudioCanvas" width="600" height="380"></canvas>
+                <!-- 放大鏡浮層 -->
+                <div id="studioLoupe" class="studio-loupe">
+                  <canvas id="loupeCanvas" width="140" height="140"></canvas>
+                  <span class="loupe-tag" id="loupeTag">微觀像素視角</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 技術規格記分卡 -->
+            <div class="studio-spec-card">
+              <h4 id="studioSpecTitle" class="spec-card-title">Carta 1200 黑白電子墨水</h4>
+              <p id="studioSpecDesc" class="spec-card-desc">元太黑白電子紙的頂級旗艦標準，具備最高反射率與最高黑白文字對比，毫無彩色彩色濾光片的亮度損失。</p>
+              
+              <div class="spec-metrics-list">
+                <div class="spec-metric-row">
+                  <span class="sm-label">色彩能力</span>
+                  <span id="specColorCount" class="sm-value">純黑白 (16 級灰階)</span>
+                </div>
+                <div class="spec-metric-row">
+                  <span class="sm-label">黑白解析度</span>
+                  <span id="specBwPpi" class="sm-value">300 PPI (視網膜印刷級)</span>
+                </div>
+                <div class="spec-metric-row">
+                  <span class="sm-label">彩色解析度</span>
+                  <span id="specColorPpi" class="sm-value">無彩色</span>
+                </div>
+                <div class="spec-metric-row">
+                  <span class="sm-label">翻頁刷新延遲</span>
+                  <span id="specRefreshSpeed" class="sm-value">~350 ms (超極速局部更新)</span>
+                </div>
+                <div class="spec-metric-row">
+                  <span class="sm-label">光學結構特徵</span>
+                  <span id="specStructure" class="sm-value">黑白微膠囊 / 微杯</span>
+                </div>
+              </div>
+
+              <div class="spec-verdict" id="specVerdict">
+                <strong>最適應用：</strong>純文字小說、論文閱讀、長效辦公記事本與高專注度閱讀裝置。
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 4. 技術演進時光軸 ══ -->
+    <section id="timeline" class="section-block">
+      <div class="section-header reveal">
+        <div class="section-eyebrow"><div class="eyebrow-dot"></div>EVOLUTION TIMELINE</div>
+        <h2 class="section-title">四、電子紙技術演進歷程（1990 ~ 2026）</h2>
+        <p class="section-desc">從 MIT 實驗室微膠囊電泳原理雛形，走過 Pearl、Carta，再到 Kaleido 3、Gallery 3 與 2026 年 Spectra 6 出貨突破，完整收錄 13 個關鍵里程碑與官方文獻佐證。</p>
+      </div>
+
+      <div class="card card-pad-lg reveal">
+        <!-- 時光軸分類篩選列 -->
+        <div class="timeline-filters">
+          <button class="tl-filter-btn active" data-filter="all">全部歷程 (13)</button>
+          <button class="tl-filter-btn" data-filter="bw">黑白進化史</button>
+          <button class="tl-filter-btn" data-filter="color">彩色突破</button>
+          <button class="tl-filter-btn" data-filter="key">關鍵商用里程碑</button>
+        </div>
+
+        <div class="timeline-wrapper" id="timelineContainer"></div>
+      </div>
+    </section>
+
+    <!-- ══ 5. 系統元件圖與資料路徑 ══ -->
+    <section id="system-diagram" class="section-block">
+      <div class="section-header reveal">
+        <div class="section-eyebrow"><div class="eyebrow-dot"></div>SYSTEM TOPOLOGY &amp; DATA FLOW</div>
+        <h2 class="section-title">五、系統元件拓撲 ✕ 雙資料路徑動態模擬</h2>
+        <p class="section-desc">視覺化呈現完整電子紙硬體拓撲。可切換「本地運算」與「手機/雲端外部路徑」兩種資料流動畫，並可點擊任一節點深入檢視晶片規格與功耗設計。</p>
+      </div>
+
+      <div class="card card-pad-lg reveal">
+        <div class="path-toggle-bar">
+          <button id="btnPathLocal" class="path-btn active">🏠 本地運算路徑（離線閱讀器 / 電子標籤）</button>
+          <button id="btnPathExternal" class="path-btn">☁️ 外部路徑（智慧手機 App ✕ BLE ✕ 雲端 AI）</button>
+        </div>
+
+        <div class="flow-canvas-wrapper">
+          <canvas id="flowCanvas" width="900" height="300"></canvas>
+        </div>
+
+        <!-- 點擊硬體節點詳細規格檢視器 (Node Detail Inspector) -->
+        <div id="nodeDetailCard" class="node-detail-card">
+          <div class="ndc-header">
+            <div class="ndc-icon" id="ndcIcon">💻</div>
+            <div>
+              <h4 class="ndc-title" id="ndcTitle">主控 MCU / SoC</h4>
+              <span class="ndc-sub" id="ndcSub">終端系統邏輯中樞</span>
+            </div>
+            <span class="ndc-power-badge" id="ndcPowerBadge">運行: 5 mA / 待機: 1.5 µA</span>
+          </div>
+          <p class="ndc-desc" id="ndcDesc">負責協調 BLE 無線封包接收、快取解碼、以及透過 SPI 介面呼叫顯示控制器 (TCON) 的波形演算法。在非更新期間立即進入 Deep Sleep 深度休眠，以維持超長電池壽命。</p>
+          <div class="ndc-specs-row" id="ndcSpecsRow">
+            <span class="spec-tag">典型晶片: Nordic nRF52840 / STM32L4</span>
+            <span class="spec-tag">通訊介面: QSPI / SPI / UART</span>
+            <span class="spec-tag">喚醒時間: &lt; 5 µs</span>
+          </div>
+        </div>
+
+        <!-- 節點快捷點擊列 -->
+        <div class="node-chips-grid">
+          <button class="node-chip active" data-node="user"><strong>使用者介面</strong><span>按鍵 / 觸控</span></button>
+          <button class="node-chip" data-node="mcu"><strong>主控 MCU</strong><span>邏輯協調控制</span></button>
+          <button class="node-chip" data-node="flash"><strong>Flash 記憶體</strong><span>儲存最後畫面</span></button>
+          <button class="node-chip" data-node="ble"><strong>BLE 通訊 IC</strong><span>低功耗射頻收發</span></button>
+          <button class="node-chip" data-node="phone"><strong>智慧型手機 App</strong><span>語音與圖像渲染</span></button>
+          <button class="node-chip" data-node="cloud"><strong>雲端 AI 伺服器</strong><span>LLM 大模型推論</span></button>
+          <button class="node-chip" data-node="tcon"><strong>顯示控制器 TCON</strong><span>Waveform 波形</span></button>
+          <button class="node-chip" data-node="driver"><strong>驅動 IC</strong><span>高壓脈衝脈波</span></button>
+          <button class="node-chip" data-node="epd"><strong>EPD 面板</strong><span>雙穩態電泳墨水</span></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 6. 運算外移架構 ══ -->
+    <section id="offload" class="section-block">
+      <div class="section-header reveal">
+        <div class="section-eyebrow"><div class="eyebrow-dot"></div>OFFLOADING ARCHITECTURES</div>
+        <h2 class="section-title">六、運算與儲存外移五大架構權衡分析</h2>
+        <p class="section-desc">將耗電高昂的 CPU 與大容量 RAM 移出終端，電子紙僅保留顯示與通訊，可大幅壓低終端重量與耗電。</p>
+      </div>
+
+      <div class="table-scroll card reveal">
+        <table class="tech-table">
+          <thead>
+            <tr>
+              <th>架構型態</th>
+              <th>終端本機保留</th>
+              <th>外移部分</th>
+              <th>終端成本/重量</th>
+              <th>耗電指標</th>
+              <th>便利性</th>
+              <th>最適情境</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>全本機架構</strong></td>
+              <td>高效能 MCU、大記憶體、全部邏輯</td>
+              <td>無</td>
+              <td>硬體元件多、重量較重</td>
+              <td>待機能耗較重 (需大電池)</td>
+              <td>最強離線閱讀能力</td>
+              <td>電子書閱讀器 (Kindle / Kobo)</td>
+            </tr>
+            <tr>
+              <td><strong>手機協同架構</strong></td>
+              <td>低功耗 BLE MCU、少量 RAM</td>
+              <td>AI 算力、大儲存、複雜 UI、連網</td>
+              <td>終端超薄輕量 (僅重十餘克)</td>
+              <td>終端耗電極低</td>
+              <td>需手機藍牙在旁協同</td>
+              <td>智慧識別證、手機第二螢幕、電子名片</td>
+            </tr>
+            <tr>
+              <td><strong>雲端運算架構</strong></td>
+              <td>BLE/Wi-Fi、基礎畫面快取</td>
+              <td>大模型 AI 推論、使用者資料庫</td>
+              <td>終端簡化</td>
+              <td>Wi-Fi 射頻連線能耗較高</td>
+              <td>功能最強大豐富</td>
+              <td>辦公桌 AI 角色牌、雲端即時公告看板</td>
+            </tr>
+            <tr>
+              <td><strong>外部閘道器</strong></td>
+              <td>僅通訊模組與顯示快取</td>
+              <td>邊緣主機/網關集中處理算力</td>
+              <td>終端最輕</td>
+              <td>網關插座供電、終端低耗</td>
+              <td>適合多螢幕集中管理</td>
+              <td>智慧教室課表、智慧工廠流程看板</td>
+            </tr>
+            <tr class="highlight">
+              <td><strong>⭐ 混合架構（推薦）</strong></td>
+              <td>最後畫面本機 Flash 快取、按鍵</td>
+              <td>複雜 AI 推論與歷史儲存</td>
+              <td><span class="best-badge">最佳平衡</span></td>
+              <td><span class="best-badge">極致低功耗</span></td>
+              <td>斷線仍維持顯示；連線即時增強</td>
+              <td><strong>個人智慧名牌、智慧便條卡、AI 工作日曆</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="hero-callout reveal" style="margin-top:1.25rem;">
+        <span class="callout-icon">💡</span>
+        <span>
+          <strong>黃金設計原則：</strong>「畫面保存（雙穩態）」永遠留在電子紙終端；「高複雜度運算（語音/LLM/排版）」移至手機或雲端。如此才能充分解放 E Ink 的零功耗維持與超輕薄潛能。
+        </span>
+      </div>
+    </section>
+
+    <!-- ══ 7. BLE ✕ 輕量電源試算器 ══ -->
+    <section id="ble-power" class="section-block">
+      <div class="section-header reveal">
+        <div class="section-eyebrow"><div class="eyebrow-dot"></div>CONNECTIVITY &amp; POWER CALCULATOR</div>
+        <h2 class="section-title">七、藍牙 BLE ✕ 輕量電源互動試算模擬器</h2>
+        <p class="section-desc">
+          BLE 具備待機電流 &lt;1 µA、峰值 &lt;15 mA 特性，適配各種輕量電池方案。滑動更新頻率或套用熱門情境，即時試算電池續航、重量與能耗佔比！
+          <a class="ref-link" href="https://na.industrial.panasonic.com/products/wireless-connectivity/bluetooth/bluetooth-low-energy" target="_blank" rel="noopener">Panasonic BLE 規範 ↗</a>
+          <a class="ref-link" href="https://tw.eink.com/application/detail/ebadge" target="_blank" rel="noopener">無電池 eBadge ↗</a>
+        </p>
+      </div>
+
+      <div class="card card-pad-lg reveal">
+        <!-- 快速情境預設按鈕 -->
+        <div class="calc-presets-bar">
+          <span class="preset-label">⚡ 快速套用情境：</span>
+          <button class="preset-chip active" data-preset="cr2032_daily">🪪 員工識別證 (CR2032 ✕ 12次/天)</button>
+          <button class="preset-chip" data-preset="esl">🏷️ 超商貨架標籤 (CR2450 ✕ 2次/天)</button>
+          <button class="preset-chip" data-preset="ai_dash">🖥️ 桌面 AI 看板 (鋰電池 ✕ 60次/天)</button>
+          <button class="preset-chip" data-preset="nfc_badge">📲 無電池 NFC 門牌 (零耗電永久)</button>
+        </div>
+
+        <div class="calc-layout">
+          <!-- 輸入欄 -->
+          <div class="calc-inputs">
+            <!-- 通訊協定 -->
+            <div>
+              <div class="calc-group-label">
+                <span>📶 無線通訊協定選擇</span>
+                <span class="calc-val-badge" id="selectedConnText">BLE (15mA 峰值)</span>
+              </div>
+              <div class="radio-option-grid">
+                <div class="radio-option">
+                  <input type="radio" id="connBle" name="connType" value="ble" checked>
+                  <label for="connBle">📡 BLE 藍牙低功耗 (推薦)</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="connWifi" name="connType" value="wifi">
+                  <label for="connWifi">🌐 Wi-Fi (高頻寬/耗能)</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- 電源方案 -->
+            <div>
+              <div class="calc-group-label">
+                <span>🔋 電源供電方案</span>
+                <span class="calc-val-badge" id="selectedPowerText">CR2032 紐扣電池 (220mAh)</span>
+              </div>
+              <div class="radio-option-grid">
+                <div class="radio-option">
+                  <input type="radio" id="pwrCr2032" name="pwrType" value="cr2032" checked>
+                  <label for="pwrCr2032">🔘 CR2032 紐扣 (220mAh)</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="pwrLipo" name="pwrType" value="lipo">
+                  <label for="pwrLipo">⚡ 鋰聚合物電池 (350mAh)</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="pwrNfc" name="pwrType" value="nfc">
+                  <label for="pwrNfc">📲 無電池 NFC 能量採集</label>
+                </div>
+                <div class="radio-option">
+                  <input type="radio" id="pwrSolar" name="pwrType" value="solar">
+                  <label for="pwrSolar">☀️ 室內弱光太陽能採集</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- 更新頻率滑塊 -->
+            <div>
+              <div class="calc-group-label">
+                <span>🔄 每日畫面刷新頻率</span>
+                <span class="calc-val-badge" id="refreshCountDisplay">12 次 / 天</span>
+              </div>
+              <input type="range" id="refreshSlider" class="custom-range" min="1" max="120" value="12" step="1">
+              <div class="range-labels">
+                <span>1次 (靜態展示)</span>
+                <span>12次 (一般辦公)</span>
+                <span>60次 (股市看板)</span>
+                <span>120次 (即時監控)</span>
+              </div>
+            </div>
+
+            <!-- 即時能耗佔比拆解圖 (Energy Breakdown Stacked Bar) -->
+            <div class="energy-breakdown-box">
+              <div class="breakdown-header">
+                <span>⚡ 每日能耗構成比例拆解</span>
+                <span id="breakdownTotalMa">約 0.095 mAh / 天</span>
+              </div>
+              <div class="stacked-bar">
+                <div class="bar-segment seg-standby" id="segStandby" style="width: 50%;" title="待機休眠底噪漏電"></div>
+                <div class="bar-segment seg-comm" id="segComm" style="width: 21%;" title="無線射頻封包收發能耗"></div>
+                <div class="bar-segment seg-epd" id="segEpd" style="width: 29%;" title="電子紙墨水高壓翻頁能耗"></div>
+              </div>
+              <div class="breakdown-legend">
+                <span><i class="dot dot-standby"></i>待機休眠 (<span id="pctStandby">50%</span>)</span>
+                <span><i class="dot dot-comm"></i>通訊傳輸 (<span id="pctComm">21%</span>)</span>
+                <span><i class="dot dot-epd"></i>墨水刷新 (<span id="pctEpd">29%</span>)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 結果面板 -->
+          <div class="calc-results">
+            <h4 class="calc-results-title">📊 即時模擬評估指標</h4>
+            <div class="result-metrics">
+              <div class="result-metric">
+                <div id="resBatteryLife" class="rm-val">412 天</div>
+                <div class="rm-lbl">預估電池續航</div>
+              </div>
+              <div class="result-metric">
+                <div id="resDeviceWeight" class="rm-val">18 g</div>
+                <div class="rm-lbl">終端整機重量估算</div>
+              </div>
+              <div class="result-metric">
+                <div id="resBomCost" class="rm-val">$ 極低</div>
+                <div class="rm-lbl">BOM 成本指數</div>
+              </div>
+              <div class="result-metric">
+                <div id="resConvenience" class="rm-val">9.4 / 10</div>
+                <div class="rm-lbl">使用便利性評分</div>
+              </div>
+            </div>
+            <div class="verdict-chip" id="calcVerdictText">
+              💡 <strong>最佳推薦：</strong>CR2032 搭配 BLE，每日更新 12 次可享超過 1 年續航，整機重量僅 18g，極適合電子識別證與辦公看板。
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ 8. 生成式 AI 整合架構 ══ -->
+    <section id="gen-ai" class="section-block">
+      <div class="section-header reveal">
+        <div class="section-eyebrow"><div class="eyebrow-dot"></div>GENERATIVE AI INTEGRATION</div>
+        <h2 class="section-title">八、生成式 AI ✕ 電子紙協同系統架構</h2>
+        <p class="section-desc">將龐大 LLM 語音多模態 AI 與超低功耗電子紙無縫串接，掌握「端、網、雲」三層最佳化工作管線。</p>
+      </div>
+
+      <div class="ai-flow-steps">
+        <div class="ai-step-card reveal">
+          <div class="step-num">STEP 01</div>
+          <h3 class="ai-step-title">使用者互動輸入</h3>
+          <p class="ai-step-desc">語音/文字由手機 App 捕捉，或電子紙上的實體按鍵觸發任務事件，傳遞給 AI 處理管線。</p>
+        </div>
+        <div class="ai-step-card reveal">
+          <div class="step-num">STEP 02</div>
+          <h3 class="ai-step-title">雲端 / 手機 AI 生成</h3>
+          <p class="ai-step-desc">LLM 執行語音轉文字、角色回覆生成、會議重點摘要，並透過安全過濾模組輸出可信內容。</p>
+        </div>
+        <div class="ai-step-card reveal">
+          <div class="step-num">STEP 03</div>
+          <h3 class="ai-step-title">手機端差分圖像渲染</h3>
+          <p class="ai-step-desc">手機將 AI 文本轉為精緻排版的差分二值化圖像（Diff Bitmap），極大化壓縮傳輸資料量至數 KB。</p>
+        </div>
+        <div class="ai-step-card reveal">
+          <div class="step-num">STEP 04</div>
+          <h3 class="ai-step-title">BLE 差分推送 ✕ 局部更新</h3>
+          <p class="ai-step-desc">透過 BLE 分包傳輸，電子紙執行<strong>局部更新（Partial Refresh）</strong>，無閃爍順暢呈現最新資訊。</p>
+        </div>
+      </div>
+
+      <div class="table-scroll card reveal" style="margin-top:1.5rem;">
+        <table class="tech-table">
+          <thead>
+            <tr>
+              <th>功能職責</th>
+              <th>電子紙終端</th>
+              <th>智慧型手機</th>
+              <th>雲端 AI 伺服器</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>畫面顯示 (雙穩態)</strong></td><td><span class="best-badge">主責 ✓ (0功耗)</span></td><td>—</td><td>—</td></tr>
+            <tr><td><strong>最後畫面儲存</strong></td><td>Flash 本地 ✓</td><td>歷史備份</td><td>雲端同步</td></tr>
+            <tr><td><strong>語音辨識 (ASR)</strong></td><td>—</td><td><span class="best-badge">主責 ✓ (端側Whisper)</span></td><td>高精辨識</td></tr>
+            <tr><td><strong>大語言模型推論 (LLM)</strong></td><td>—</td><td>小型量化端側模型</td><td><span class="best-badge">主責 ✓ (Gemini / Claude)</span></td></tr>
+            <tr><td><strong>差分圖像排版渲染</strong></td><td>—</td><td><span class="best-badge">主責 ✓ (Skia / Canvas)</span></td><td>支援插圖生成 (Imagen)</td></tr>
+            <tr><td><strong>對話歷史記憶</strong></td><td>少量快取</td><td><span class="best-badge">本機 SQLite 資料庫 ✓</span></td><td>跨裝置同步</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ══ 9. 官方來源索引庫 ══ -->
+    <section id="citations" class="section-block">
+      <div class="section-header reveal">
+        <div class="section-eyebrow"><div class="eyebrow-dot"></div>OFFICIAL CITATIONS</div>
+        <h2 class="section-title">九、官方資料來源與學術引用索引庫</h2>
+        <p class="section-desc">本平台所有技術數據嚴格依據元太科技及國際官方公開文件考證，共計 17 處來源。</p>
+      </div>
+
+      <!-- 來源分類過濾標籤 -->
+      <div class="citation-filters reveal">
+        <button class="cit-filter-btn active" data-filter="all">全部考證來源 (17)</button>
+        <button class="cit-filter-btn" data-filter="原理與規格">原理與規格 (7)</button>
+        <button class="cit-filter-btn" data-filter="彩色技術">彩色技術 (5)</button>
+        <button class="cit-filter-btn" data-filter="硬體與通訊">硬體與通訊 (5)</button>
+      </div>
+
+      <div class="citations-grid" id="citationsGrid"></div>
+    </section>
+
+  </main>
+
+  <!-- 頁尾 -->
+  <footer class="page-footer">
+    <div class="footer-inner">
+      <p class="footer-quote">「將畫面保存留在電子紙端，將高複雜度運算移至手機或雲端 — 打造最輕薄長續航的智慧物聯網。」</p>
+      <p class="footer-meta">© 2026 元太科技 E Ink 電子紙技術可視化互動平台｜依據公開技術文件與學術論文整理</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

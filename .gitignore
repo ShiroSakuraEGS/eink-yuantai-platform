@@ -1,0 +1,7 @@
+# 排除 Google Sites 專用自包含 HTML 檔案
+google-sites-embed.html
+
+# 暫存與快取檔案
+.DS_Store
+Thumbs.db
+*.log
